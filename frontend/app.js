@@ -1,13 +1,23 @@
 // Frontend and backend now run as separate apps on separate ports.
 // Change this if your backend runs somewhere else.
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://url-short-d4o1.onrender.com";
 
 // ---------- State ----------
-function getToken() { return localStorage.getItem("token"); }
-function setToken(t) { localStorage.setItem("token", t); }
-function clearToken() { localStorage.removeItem("token"); }
-function getEmail() { return localStorage.getItem("email"); }
-function setEmail(e) { localStorage.setItem("email", e); }
+function getToken() {
+  return localStorage.getItem("token");
+}
+function setToken(t) {
+  localStorage.setItem("token", t);
+}
+function clearToken() {
+  localStorage.removeItem("token");
+}
+function getEmail() {
+  return localStorage.getItem("email");
+}
+function setEmail(e) {
+  localStorage.setItem("email", e);
+}
 
 function getSavedLinks() {
   return JSON.parse(localStorage.getItem("myLinks") || "[]");
@@ -37,39 +47,45 @@ function renderAuthArea() {
 
 document.querySelectorAll(".tab-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach((c) => c.classList.remove("active"));
+    document
+      .querySelectorAll(".tab-btn")
+      .forEach((b) => b.classList.remove("active"));
+    document
+      .querySelectorAll(".tab-content")
+      .forEach((c) => c.classList.remove("active"));
     btn.classList.add("active");
     document.getElementById(btn.dataset.tab + "Form").classList.add("active");
   });
 });
 
 // ---------- Register ----------
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const email = document.getElementById("registerEmail").value;
-  const password = document.getElementById("registerPassword").value;
-  const resultEl = document.getElementById("authResult");
+document
+  .getElementById("registerForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("registerEmail").value;
+    const password = document.getElementById("registerPassword").value;
+    const resultEl = document.getElementById("authResult");
 
-  try {
-    const res = await fetch(`${API_BASE}/api/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Registration failed");
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Registration failed");
 
-    setToken(data.token);
-    setEmail(data.user.email);
-    resultEl.textContent = "Account created — you're signed in.";
-    resultEl.className = "result success";
-    renderAuthArea();
-  } catch (err) {
-    resultEl.textContent = err.message;
-    resultEl.className = "result error";
-  }
-});
+      setToken(data.token);
+      setEmail(data.user.email);
+      resultEl.textContent = "Account created — you're signed in.";
+      resultEl.className = "result success";
+      renderAuthArea();
+    } catch (err) {
+      resultEl.textContent = err.message;
+      resultEl.className = "result error";
+    }
+  });
 
 // ---------- Login ----------
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -121,7 +137,11 @@ document.getElementById("shortenForm").addEventListener("submit", async (e) => {
     resultEl.className = "result success";
 
     if (token) {
-      saveLink({ shortCode: data.shortCode, shortUrl: data.shortUrl, longUrl: data.longUrl });
+      saveLink({
+        shortCode: data.shortCode,
+        shortUrl: data.shortUrl,
+        longUrl: data.longUrl,
+      });
       renderLinksList();
     }
     document.getElementById("longUrlInput").value = "";
@@ -152,7 +172,7 @@ function renderLinksList() {
         <a href="${l.shortUrl}" target="_blank">${l.shortCode}</a>
         <span class="long-url">${l.longUrl}</span>
         <button data-code="${l.shortCode}" class="viewAnalyticsBtn">Analytics</button>
-      </li>`
+      </li>`,
     )
     .join("");
 
