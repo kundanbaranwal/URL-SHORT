@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ShortLink — URL Shortener</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>ShortLink</h1>
+      <div id="authArea" class="auth-area"></div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Shorten a URL</h2>
+        <form id="shortenForm">
+          <input type="url" id="longUrlInput" placeholder="https://example.com/very/long/link" required />
+          <button type="submit">Shorten</button>
+        </form>
+        <p id="shortenResult" class="result"></p>
+      </section>
+
+      <section class="card auth-card">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="login">Login</button>
+          <button class="tab-btn" data-tab="register">Register</button>
+        </div>
+
+        <form id="loginForm" class="tab-content active">
+          <input type="email" id="loginEmail" placeholder="Email" required />
+          <input type="password" id="loginPassword" placeholder="Password" required />
+          <button type="submit">Login</button>
+        </form>
+
+        <form id="registerForm" class="tab-content">
+          <input type="email" id="registerEmail" placeholder="Email" required />
+          <input type="password" id="registerPassword" placeholder="Password (min 6 chars)" required />
+          <button type="submit">Create account</button>
+        </form>
+        <p id="authResult" class="result"></p>
+      </section>
+
+      <section class="card">
+        <h2>My Links</h2>
+        <p class="hint">Links you create while logged in are saved here (locally in this browser) so you can check their analytics.</p>
+        <ul id="linksList" class="links-list"></ul>
+      </section>
+
+      <section class="card" id="analyticsCard" hidden>
+        <h2>Analytics for <span id="analyticsCode"></span></h2>
+        <div id="analyticsBody"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

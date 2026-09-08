@@ -1,0 +1,8 @@
+{
+  "name": "url-shortener-frontend",
+  "version": "1.0.0",
+  "description": "Static frontend for the URL Shortener - plain HTML/CSS/JS, no build step",
+  "scripts": {
+    "start": "npx http-server . -p 3000 -c-1"
+  }
+}
